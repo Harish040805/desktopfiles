@@ -1,0 +1,59 @@
+																		PE CYBER SECURITY
+
+1. Bringing Down the Internet around the World
+//1988//
+Robert Morris Jr. => Cornell University graduate student
+
+2. British Online Bank Egg 
+//2002//
+Found users using weak passwords
+
+3. Attack in Estonia
+//October 2004//
+US & Canadian Authorities arrested 28 people from 6 countries involved in international crime
+
+4. Trojan Horse
+//January 2008//
+Security researches led by Liam Omurchu of Symantec detected a new Trojan Horse
+
+5. Computer as Enabler of Attacker
+//November 2008//
+GPS Systems to guide their boats, Mumbai
+
+6. Terrorism
+//15 October 2009//
+Colleen LaRose, known as "Jihad Jane" arrested for involving in a conspiracy to commit murder & provide material support to terrorists in Philadelphia.
+
+7. Brute Force
+//December 2009//
+Computer Security Firm Imperva analyzed 34 million Facebook password that had previously been disclosed accidentally guessing passwords, 18,278 passwords of length 3 or less.
+
+8. Defaced Websites
+//January 2010//
+Face defacement with Mr. Bean's Face
+
+9. Albert Gonzales
+//March 2010//
+20 years prison for Cyber Crime
+
+10. Drive-by Download Attacks
+//April 2011//
+United States and global internet users experienced significant rise in drive-by download attacks, by exploiting vulnerabilities in Adobe Reader, Acrobat
+
+11. Advanced Persistent Threat
+//2014//
+Economic Espionage => Chinese Hackers Attack in Absentia 
+
+12. Barclays Bank
+//2024//
+Fake website similar to Barclays Bank (England) found
+
+========================================================
+Possibilities  passwords
+a-z = 26
+a-z + 0-9 = 36
+a-z + A-Z + 0-9 = 62
+Use a string you can remember
+========================================================
+OTP 	=>	New number generated every 60 seconds
+========================================================
