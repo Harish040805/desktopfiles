@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Student Data Base — sqlite (sql.js)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{font-family:Inter,Segoe UI,Arial,system-ui; color:#222}
+    body{max-width:95vw;margin:28px auto;padding:18px;border-radius:8px;background:#ffffff}
+    h1{margin:0 0 12px;font-size:20px}
+    .row{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+    input[type="text"], input[type="number"], select{padding:8px;border:1px solid #ccc;border-radius:6px;font-size:14px;}
+    button{padding:9px 14px;border-radius:8px;border:0;background:#1ec498;color:#fff;font-weight:600;cursor:pointer;
+      font-size:14px;}
+    button.secondary{background:#1ec498;color:#fff}
+    button.warn{background:#1ec498}
+    textarea{width:100%;height:385px;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;resize:vertical}
+    .small{font-size:13px;color:#555}
+    .controls{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+    .status{margin-top:10px;font-size:13px;color:#666}
+    footer{margin-top:18px;font-size:13px;color:#666}
+    a.link{color:#0069ff;text-decoration:none}
+  </style>
+</head>
+<body>
+  <h1>Student Data Base — sqlite (sql.js)</h1>
+  <div class="row">
+    <input id="name" type="text" placeholder="Enter Name" />
+    <input id="age" type="number" placeholder="Enter Age" />
+    <button id="addBtn">Add Student</button>
+    <button id="showBtn" class="secondary">Show Students</button>
+  </div>
+  <div class="controls">
+    <button id="resetBtn" class="warn">Reset DB</button>
+    <button id="exportBtn" class="secondary">Export DB (.sqlite)</button>
+    <label style="display:inline-flex;align-items:center;gap:8px">
+      <input id="fileInput" type="file" style="display:none"/>
+      <button id="importBtn">Import DB (.sqlite)</button>
+    </label>
+    <div style="flex:1"></div>
+    <div class="small">DB persisted in browser (localStorage). Use Export/Import to move DB file.</div>
+  </div>
+  <br>
+  <textarea id="display" readonly></textarea>
+  <div class="status" id="status">Loading...</div>
+  <footer>
+    Tips: First open requires internet to download the wasm. After DB is created it will persist in this browser. To use DB on another machine, Export and Import the .sqlite file. Need offline first-run (embed wasm)? Ask me and I will produce that larger self-contained HTML.
+  </footer>
+<script>
+const SQLJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js";
+const SQL_WASM_CDN = "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.wasm";
+const LS_KEY = "studentdb_base64_v1";
+const display = document.getElementById("display");
+const statusEl = document.getElementById("status");
+const addBtn = document.getElementById("addBtn");
+const showBtn = document.getElementById("showBtn");
+const resetBtn = document.getElementById("resetBtn");
+const exportBtn = document.getElementById("exportBtn");
+const importBtn = document.getElementById("importBtn");
+const fileInput = document.getElementById("fileInput");
+const nameInput = document.getElementById("name");
+const ageInput = document.getElementById("age");
+let SQL;        
+let db = null;  
+function log(msg){
+  display.value += msg + "\n";
+  display.scrollTop = display.scrollHeight;
+}
+function uint8ToBase64(u8){
+  let CHUNK_SIZE = 0x8000;
+  let index = 0;
+  let length = u8.length;
+  let result = "";
+  let slice;
+  while (index < length) {
+    slice = u8.subarray(index, Math.min(index + CHUNK_SIZE, length));
+    result += String.fromCharCode.apply(null, slice);
+    index += CHUNK_SIZE;
+  }
+  return btoa(result);
+}
+function base64ToUint8(base64){
+  const binary = atob(base64);
+  const len = binary.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+function persistDB(){
+  try{
+    const u8 = db.export();
+    const b64 = uint8ToBase64(u8);
+    localStorage.setItem(LS_KEY, b64);
+    statusEl.textContent = "DB saved to localStorage.";
+  }catch(err){
+    console.error("persist error", err);
+    statusEl.textContent = "Error saving DB: " + err.message;
+  }
+}
+function loadDBFromLocalStorage(){
+  const base64 = localStorage.getItem(LS_KEY);
+  if(!base64) return false;
+  const u8 = base64ToUint8(base64);
+  db = new SQL.Database(u8);
+  statusEl.textContent = "DB loaded from localStorage.";
+  return true;
+}
+function initEmptyDB(){
+  db = new SQL.Database();
+  const createTableSQL = `
+    CREATE TABLE IF NOT EXISTS Student (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      age INTEGER NOT NULL
+    );
+  `;
+  db.run(createTableSQL);
+  persistDB();
+  statusEl.textContent = "New DB created.";
+}
+function runSelect(sql, params=[]){
+  try{
+    const stmt = db.prepare(sql);
+    stmt.bind(params);
+    const rows = [];
+    while(stmt.step()){
+      const row = stmt.getAsObject();
+      rows.push(row);
+    }
+    stmt.free();
+    return rows;
+  }catch(e){
+    console.error(e);
+    throw e;
+  }
+}
+function addStudent(){
+  const name = nameInput.value.trim();
+  const age = parseInt(ageInput.value);
+  if(!name || Number.isNaN(age)){
+    alert("Enter valid name and age.");
+    return;
+  }
+  try{
+    const insertSQL = "INSERT INTO Student (name, age) VALUES (?, ?);";
+    db.run(insertSQL, [name, age]);
+    persistDB();
+    log("Added: " + name + " (age " + age + ")");
+    nameInput.value = "";
+    ageInput.value = "";
+  }catch(e){
+    log("Error adding student: " + e.message);
+  }
+}
+function showStudents(){
+  try{
+    const rows = runSelect("SELECT id, name, age FROM Student ORDER BY id;");
+    display.value = "Student Records:\n";
+    if(rows.length === 0) {
+      display.value += "(no records)\n";
+      return;
+    }
+    for(const r of rows){
+      display.value += `${r.id} - ${r.name} - Age: ${r.age}\n`;
+    }
+  }catch(e){
+    log("Error reading students: " + e.message);
+  }
+}
+function resetDB(){
+  if(!confirm("Reset database? This will erase all records.")) return;
+  initEmptyDB();
+  display.value = "DB reset. (empty DB created)\n";
+}
+function exportDBToFile(){
+  try{
+    const u8 = db.export();
+    const blob = new Blob([u8], {type: "application/octet-stream"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "studentdb.sqlite";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    statusEl.textContent = "DB exported (download started).";
+  }catch(e){
+    statusEl.textContent = "Export failed: " + e.message;
+  }
+}
+function importDBFromFile(file){
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    try{
+      const arrayBuffer = evt.target.result;
+      const u8 = new Uint8Array(arrayBuffer);
+      db = new SQL.Database(u8);
+      persistDB();
+      statusEl.textContent = "DB imported and saved to localStorage.";
+      display.value = "Imported DB successfully.\n";
+    }catch(e){
+      statusEl.textContent = "Import failed: " + e.message;
+    }
+  };
+  reader.onerror = function(){ statusEl.textContent = "Read error"; };
+  reader.readAsArrayBuffer(file);
+}
+addBtn.addEventListener("click", addStudent);
+showBtn.addEventListener("click", showStudents);
+resetBtn.addEventListener("click", resetDB);
+exportBtn.addEventListener("click", exportDBToFile);
+importBtn.addEventListener("click", ()=> fileInput.click());
+fileInput.addEventListener("change", ()=> {
+  const f = fileInput.files && fileInput.files[0];
+  if(f) importDBFromFile(f);
+});
+function loadSqlJs(){
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = SQLJS_CDN;
+    script.onload = () => resolve();
+    script.onerror = (e) => reject(new Error("Failed to load sql.js from CDN: " + e.message));
+    document.head.appendChild(script);
+  });
+}
+(async function boot(){
+  try{
+    await loadSqlJs();
+  }catch(err){
+    statusEl.textContent = "Could not load sql-wasm.js from CDN. " + err.message;
+    display.value = "Please connect to internet for the first run or ask for an offline embedded copy.\n";
+    console.error(err);
+    return;
+  }  
+  SQL = await window.initSqlJs({
+    locateFile: file => {      
+      if(file && file.endsWith('.wasm')) return SQL_WASM_CDN;
+      return file;
+    }
+  });  
+  const loaded = loadDBFromLocalStorage();
+  if(!loaded){
+    initEmptyDB();
+    display.value = "Empty DB created. Use Add Student to insert records.\n";
+  } else {
+    display.value = "DB loaded from localStorage.\n";
+  }
+  showStudents();
+  statusEl.textContent = "Ready (sql.js loaded).";
+})();
+</script>
+</body>
+</html>
