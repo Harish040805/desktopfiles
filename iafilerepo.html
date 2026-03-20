@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA File Repo</title>
+
+<style>
+* { box-sizing: border-box; font-family: "Segoe UI", Arial, sans-serif; }
+
+:root{
+    --green:#9fe6a0;
+    --green-dark:#3a9b5a;
+    --danger:#ff6b6b;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#e8fbee,#f6fffa);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:96%;
+    max-width:1500px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:8px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border-top:6px solid var(--green);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.card h3{
+    margin:0;
+    text-align:center;
+    font-size:15px;
+    color:#1e3d2a;
+}
+
+.upload-box{
+    border:2px dashed var(--green);
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+    cursor:pointer;
+    color:#3a7a4b;
+    font-size:13px;
+}
+
+.upload-box:hover{
+    background:#f2fff6;
+}
+
+input[type=file]{ display:none; }
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+button{
+    flex:1;
+    border:none;
+    border-radius:10px;
+    padding:7px;
+    font-size:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.view{ background:var(--green); }
+.view:hover{ background:var(--green-dark); color:#fff; }
+
+.delete{ background:#ffdede; }
+.delete:hover{ background:var(--danger); color:#fff; }
+
+.status{
+    font-size:11px;
+    text-align:center;
+    color:#2f6b46;
+    min-height:14px;
+}
+
+.viewer{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    backdrop-filter:blur(4px);
+}
+
+.viewer-box{
+    width:85%;
+    height:85%;
+    background:#fff;
+    border-radius:18px;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+}
+
+.viewer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:8px;
+    border-bottom:1px solid #ddd;
+}
+
+.viewer-header h4{ margin:0; font-size:14px; }
+
+.close{
+    background:#ffdede;
+    border:none;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    cursor:pointer;
+}
+
+iframe,pre{
+    flex:1;
+    margin-top:10px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    overflow:auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card"><h3>IP IA 1 i</h3><label class="upload-box">Upload File<input type="file" data-key="IP_IA_1"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CD IA 1 i</h3><label class="upload-box">Upload File<input type="file" data-key="CD_IA_1"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>AI IA 1 i</h3><label class="upload-box">Upload File<input type="file" data-key="AI_IA_1"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CNS IA 1 i</h3><label class="upload-box">Upload File<input type="file" data-key="CNS_IA_1"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>PE (CYS) IA 1 i</h3><label class="upload-box">Upload File<input type="file" data-key="PE_CYS_IA_1"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>IP IA 1 ii</h3><label class="upload-box">Upload File<input type="file" data-key="IP_IA_2"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CD IA 1 ii</h3><label class="upload-box">Upload File<input type="file" data-key="CD_IA_2"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>AI IA 1 ii</h3><label class="upload-box">Upload File<input type="file" data-key="AI_IA_2"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CNS IA 1 ii</h3><label class="upload-box">Upload File<input type="file" data-key="CNS_IA_2"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>PE (CYS) IA 1 ii</h3><label class="upload-box">Upload File<input type="file" data-key="PE_CYS_IA_2"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>IP IA 2 i</h3><label class="upload-box">Upload File<input type="file" data-key="IP_IA_3"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CD IA 2 i</h3><label class="upload-box">Upload File<input type="file" data-key="CD_IA_3"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>AI IA 2 i</h3><label class="upload-box">Upload File<input type="file" data-key="AI_IA_3"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CNS IA 2 i</h3><label class="upload-box">Upload File<input type="file" data-key="CNS_IA_3"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>PE (CYS) IA 2 i</h3><label class="upload-box">Upload File<input type="file" data-key="PE_CYS_IA_3"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>IP IA 2 ii</h3><label class="upload-box">Upload File<input type="file" data-key="IP_IA_4"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CD IA 2 ii</h3><label class="upload-box">Upload File<input type="file" data-key="CD_IA_4"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>AI IA 2 ii</h3><label class="upload-box">Upload File<input type="file" data-key="AI_IA_4"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>CNS IA 2 ii</h3><label class="upload-box">Upload File<input type="file" data-key="CNS_CYS_IA_4"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+<div class="card"><h3>PE (CYS) IA 2 ii</h3><label class="upload-box">Upload File<input type="file" data-key="PE_CYS_IA_4"></label><div class="actions"><button class="view">View</button><button class="delete">Delete</button></div><div class="status"></div></div>
+
+</div>
+
+<div class="viewer" id="viewer">
+<div class="viewer-box">
+<div class="viewer-header">
+<h4 id="viewerTitle"></h4>
+<button class="close">✕</button>
+</div>
+<iframe id="frame" hidden></iframe>
+<pre id="text" hidden></pre>
+</div>
+</div>
+
+<script>
+let db;
+const request=indexedDB.open("IA_DB",1);
+
+request.onupgradeneeded=e=>{
+    db=e.target.result;
+    db.createObjectStore("files",{keyPath:"id"});
+};
+
+request.onsuccess=e=>{
+    db=e.target.result;
+    loadFiles();
+};
+
+function loadFiles(){
+    db.transaction("files","readonly").objectStore("files").getAll().onsuccess=e=>{
+        e.target.result.forEach(f=>{
+            const input=document.querySelector(`[data-key="${f.id}"]`);
+            if(input){
+                input.closest(".card").querySelector(".status").textContent=f.name;
+            }
+        });
+    };
+}
+
+document.addEventListener("change",e=>{
+    if(e.target.type==="file"){
+        const f=e.target.files[0];
+        if(!f) return;
+
+        const reader=new FileReader();
+        reader.onload=()=>{
+            db.transaction("files","readwrite").objectStore("files")
+            .put({id:e.target.dataset.key,name:f.name,type:f.type,data:reader.result});
+            e.target.closest(".card").querySelector(".status").textContent=f.name;
+        };
+        reader.readAsArrayBuffer(f);
+    }
+});
+
+document.addEventListener("click",e=>{
+    if(e.target.classList.contains("delete")){
+    const card = e.target.closest(".card");
+    const key = card.querySelector("input").dataset.key;
+
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    alert("Enter this OTP to confirm deletion: " + otp);
+
+    const userOtp = prompt("Enter the 6 digit OTP:");
+
+    if(userOtp === String(otp)){
+        db.transaction("files","readwrite").objectStore("files").delete(key);
+        card.querySelector(".status").textContent = "Deleted";
+        alert("File deleted successfully.");
+    }else{
+        alert("Incorrect OTP. Deletion cancelled.");
+    }
+}
+
+    if(e.target.classList.contains("view")){
+        const card=e.target.closest(".card");
+        const key=card.querySelector("input").dataset.key;
+
+        db.transaction("files","readonly").objectStore("files").get(key).onsuccess=ev=>{
+            const f=ev.target.result;
+            if(!f) return;
+
+            const viewer=document.getElementById("viewer");
+            const frame=document.getElementById("frame");
+            const text=document.getElementById("text");
+
+            document.getElementById("viewerTitle").textContent=f.name;
+            frame.hidden=text.hidden=true;
+
+            const blob=new Blob([f.data],{type:f.type});
+
+            if(f.type.startsWith("text")||f.type.includes("json")){
+                blob.text().then(t=>{
+                    text.textContent=t;
+                    text.hidden=false;
+                });
+            }else{
+                frame.src=URL.createObjectURL(blob);
+                frame.hidden=false;
+            }
+
+            viewer.style.display="flex";
+        };
+    }
+
+    if(e.target.classList.contains("close")){
+        document.getElementById("viewer").style.display="none";
+    }
+});
+</script>
+
+</body>
+</html>
