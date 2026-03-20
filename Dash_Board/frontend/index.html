@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel to Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ffffff, #f9feff);
+    color: #0f172a;
+}
+h1 {
+    color: #0ea5a4;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 40px 0 10px 0;
+    font-weight: 600;
+}
+.card {
+    background: #ffffff;
+    padding: 35px 30px;
+    border-radius: 16px;
+    max-width: 1100px;
+    margin: 20px auto 60px auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 2px solid #0ea5a4;
+}
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.input-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.input-left label {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+input[type="file"], select {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    background: #f0f9fb;
+    transition: border 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+input[type="file"]:hover, select:hover {
+    border-color: #0ea5a4;
+    box-shadow: 0 0 10px rgba(14, 165, 164, 0.35);
+}
+input[type="file"]:focus, select:focus {
+    outline: none;
+    border-color: #0ea5a4;
+    box-shadow: 0 0 12px rgba(14, 165, 164, 0.45);
+    background: #e0f7fa;
+}
+input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, #0ea5a4, #14b8a6);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 30px;
+    transition: background 0.25s ease;
+}
+input[type="file"]::file-selector-button:hover {
+    background: linear-gradient(135deg, #14b8a6, #0ea5a4);
+}
+#charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 35px;
+    justify-content: center;
+}
+canvas {
+    background: #f9fefe;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    width: 100%;
+    max-width: 480px;
+    height: 350px;
+}
+canvas:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+@media (max-width: 768px) {
+    .input-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    #charts {
+        flex-direction: column;
+        align-items: center;
+    }
+    canvas {
+        max-width: 90%;
+        height: 300px;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1>Excel to Dashboard</h1>
+
+<div class="card">
+    <div class="input-row">
+        <div class="input-left">
+            <label for="chartType">Chart Type:</label>
+            <select id="chartType">
+                <option value="none" selected>None</option>
+                <option value="bar">Bar</option>
+                <option value="pie">Pie</option>
+                <option value="line">Line</option>
+            </select>
+        </div>
+        <input type="file" id="fileInput" accept=".xlsx,.xls">
+    </div>
+
+    <div id="charts"></div>
+</div>
+
+<script>
+let excelData = null;
+let myCharts = [];
+
+document.getElementById("fileInput").addEventListener("change", async () => {
+    const file = document.getElementById("fileInput").files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const resp = await fetch("/upload", { method: "POST", body: formData });
+    const result = await resp.json();
+    if (!result.success) return alert(result.error);
+
+    excelData = result.data;
+
+    renderCharts();
+});
+
+document.getElementById("chartType").addEventListener("change", () => {
+    renderCharts();
+});
+
+document.getElementById("chartType").addEventListener("change", () => {
+    const type = document.getElementById("chartType").value;
+    const container = document.getElementById("charts");
+
+    if (type === "none" || !excelData) {
+        container.innerHTML = "";
+        myCharts.forEach(c => c.destroy());
+        myCharts = [];
+        return;
+    }
+
+    container.innerHTML = "";
+    myCharts.forEach(c => c.destroy());
+    myCharts = [];
+
+    const labels = excelData.labels;
+    const numeric_cols = excelData.numeric_cols;
+    const values = excelData.values;
+
+    numeric_cols.forEach(col => {
+        const canvas = document.createElement("canvas");
+        container.appendChild(canvas);
+
+        const chart = new Chart(canvas, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: col,
+                    data: values[col],
+                    backgroundColor: type === 'line' ? 'rgba(14,165,164,0.2)' : 'rgba(14,165,164,0.6)',
+                    borderColor: 'rgba(14,165,164,1)',
+                    fill: type !== 'line'
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: true } } }
+        });
+
+        myCharts.push(chart);
+    });
+});
+
+function renderCharts() {
+    const type = document.getElementById("chartType").value;
+    const container = document.getElementById("charts");
+
+    if (type === "none" || !excelData) {
+        container.innerHTML = "";
+        myCharts.forEach(c => c.destroy());
+        myCharts = [];
+        return;
+    }
+
+    container.innerHTML = "";
+    myCharts.forEach(c => c.destroy());
+    myCharts = [];
+
+    const labels = excelData.labels;
+    const numeric_cols = excelData.numeric_cols;
+    const values = excelData.values;
+
+    numeric_cols.forEach(col => {
+        const canvas = document.createElement("canvas");
+        container.appendChild(canvas);
+
+        const chart = new Chart(canvas, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: col,
+                    data: values[col],
+                    backgroundColor: type === 'line' ? 'rgba(14,165,164,0.2)' : 'rgba(14,165,164,0.6)',
+                    borderColor: 'rgba(14,165,164,1)',
+                    fill: type !== 'line'
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: true } } }
+        });
+
+        myCharts.push(chart);
+    });
+}
+
+</script>
+</body>
+</html>
