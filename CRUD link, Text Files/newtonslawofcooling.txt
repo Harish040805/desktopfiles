@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton's Law of Cooling Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Newton's Law of Cooling Calculator</h1>
+    <form id="calculator-form">
+        <label for="initial-temperature">Initial Temperature (T0):</label>
+        <input type="number" id="initial-temperature" required>
+        <br><br>
+        <label for="surrounding-temperature">Surrounding Temperature (Ts):</label>
+        <input type="number" id="surrounding-temperature" required>
+        <br><br>
+        <label for="final-temperature">Final Temperature (T(t)):</label>
+        <input type="number" id="final-temperature" required>
+        <br><br>
+        <label for="cooling-constant">Cooling Constant (k):</label>
+        <input type="number" id="cooling-constant" required>
+        <br><br>
+        <button id="calculate-button">Calculate Time</button>
+    </form>
+    <p id="result"></p>
+    <p id="k-value"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>

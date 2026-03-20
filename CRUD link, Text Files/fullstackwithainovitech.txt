@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSD with AI</title>
+</head>
+<body>
+<pre>
+Doubts
+
+1. How to set copilot in VS Code bro. Can you teach the process bro?
+
+____________________
+
+Other
+
+
+____________________
+
+Notes
+
+
+Steps in Project Development
+
+Writing Codes
+Debugging errors
+Documentation & Testing
+Deployment setup
+
+AI Tools
+
+Github Copilot (code autocomplete)
+ChatGPT(debugging, explaination, generation)
+Claude (long code summarization)
+Mintlify AI (docs)
+Figma + AI plugins (UI/UX)
+
+____________________
+
+WebSite Prompt
+
+
+
+____________________
+
+Add copilot, chatgpt, meta ai in resume
+Age, gender detector
+</pre>
+</body>
+</html>

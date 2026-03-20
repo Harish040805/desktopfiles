@@ -1,0 +1,8 @@
+Hello all, today cycle detection
+Simple and most important concept in maths and Data Strctures
+It comes under graph theory
+Used in real life in a vast areas like construction, routing, google maps etc.,
+In a grph path create from a vertex and end in the same vertex again - It is cycle
+In simple words, a cycle is a closed path in a graph
+Directed graph, Undirected graph
+Cycles in Directed graph, Undirected graph
