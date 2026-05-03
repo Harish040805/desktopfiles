@@ -21,14 +21,13 @@
     #scrollDnBtn, #scrollUpBtn { margin-bottom: 8px; width: 305px; height: 35px; font-size: 12px; background: lime; border: none; 
        color: #000; font-weight:500; font-size: 20px; border-radius: 50px; cursor: pointer; display: block; margin: auto; 
        font-family: 'Lucida Sans'}
-    .gapo { height: 60px; }
 </style>
 </head>
 <body>
     <span id="topo"></span>
     <br><br>
 <button id="scrollDnBtn">Academics Dashboard  &darr;</button>
-<br><br><br>
+<br>
 <h3>Theory</h3>
 <table id="theoryTable">
     <tr>
@@ -282,15 +281,13 @@
         <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
     </tr>
 </table>
-<br><br><br><br><br><br>
-<div class="gapo"></div>
+<br>
 <div id="otherWorks" style="text-align:center;">
     <button id="scrollUpBtn">Other HW  &uarr;</button>
 </div>
 <br>
 <textarea class="scroll-textbox"></textarea>
 <br><br>
-
 <script>
 let db;
 const DB_NAME = "AcademicsDashboardDB";
