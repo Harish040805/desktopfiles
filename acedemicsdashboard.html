@@ -6,288 +6,190 @@
 <title>Academics Dashboard</title>
 <link rel="shortcut icon" href="D:\eaknnewproject\eakn.png" type="image/x-icon">
 <style>
-    body { overflow: hidden; font-family: 'Lucida Sans', sans-serif; margin: 0; background: #f4ffee; }
-    h3 { margin-top: 0; margin-bottom: 0; font-size: 17px; color: #555; background-color: #00ec00; padding: 8px; color: #fff; 
-        text-align: center;}
-    table { width: 100%; border-collapse: collapse; margin-top: 0; background: #fff; }
-    th, td { border: 1px solid #1fed0c; padding: 6.83px; text-align: center; font-size: 15px; }
-    th { background-color: lime; color: white; }
-    input[type="number"] { width: 90%;}
-    input[type="checkbox"] { transform: scale(1.2); color: lime;}
+    /* Global Reset & Compact Layout */
+    * { box-sizing: border-box; }
+    body { 
+        overflow: hidden; 
+        font-family: 'Segoe UI', 'Lucida Sans', sans-serif; 
+        margin: 0; 
+        background: #f4ffee; 
+        height: 100vh; 
+        display: flex; 
+        flex-direction: column; 
+        padding: 5px;
+    }
+
+    /* Condensed Typography */
+    h3 { 
+        margin: 2px 0; 
+        font-size: 13px; 
+        background-color: #00ec00; 
+        padding: 4px; 
+        color: #fff; 
+        text-align: center;
+        border-radius: 4px 4px 0 0;
+    }
+
+    /* Tables - Optimized for space */
+    table { width: 100%; border-collapse: collapse; background: #fff; table-layout: auto; }
+    th, td { 
+        border: 1px solid #1fed0c; 
+        padding: 2px 1px; 
+        text-align: center; 
+        font-size: 11px; 
+        line-height: 1;
+    }
+    th { background-color: lime; color: white; font-weight: 600; }
+    
+    /* Small UI Elements */
+    input[type="number"] { width: 35px; font-size: 10px; padding: 1px; border: 1px solid #ccc; }
+    input[type="checkbox"] { transform: scale(0.9); margin: 1px; vertical-align: middle; }
     tr:nth-child(even) { background-color: #f9f9f9; }
-    .scroll-textbox { width: 99vw; height: 60px; border: none; padding: 10px; resize: none; overflow-y: scroll; 
-        overflow-x: hidden; font-size: 25px; font-family: Arial, sans-serif; -ms-overflow-style: none; scrollbar-width: none; }
-    .scroll-textbox::-webkit-scrollbar { display: none; }
-    #scrollDnBtn, #scrollUpBtn { margin-bottom: 8px; width: 305px; height: 35px; font-size: 12px; background: lime; border: none; 
-       color: #000; font-weight:500; font-size: 20px; border-radius: 50px; cursor: pointer; display: block; margin: auto; 
-       font-family: 'Lucida Sans'}
+
+    /* Button Styling */
+    .btn-container { text-align: center; padding: 2px; }
+    #scrollDnBtn, #scrollUpBtn { 
+        width: 200px; 
+        height: 24px; 
+        font-size: 14px; 
+        background: lime; 
+        border: none; 
+        color: #fff; 
+        font-weight: bold; 
+        border-radius: 20px; 
+        cursor: pointer; 
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Dynamic Textarea */
+    .scroll-textbox { 
+        flex-grow: 1; 
+        width: 100%; 
+        border: 1px solid #1fed0c; 
+        padding: 5px; 
+        resize: none; 
+        font-size: 14px; 
+        font-family: Arial, sans-serif;
+        margin-top: 5px;
+        background: #fff;
+    }
+
+    /* Specific Row for Keys (Gn St C Sb) */
+    .key-row td { font-size: 9px; padding: 1px; background-color: #e8ffe8; color: #222; font-weight: bold;}
+    
+    /* Subject column width */
+    .subj-col { width: 15%; text-align: left; padding-left: 5px; }
 </style>
 </head>
 <body>
-    <span id="topo"></span>
-    <br><br>
-<button id="scrollDnBtn">Academics Dashboard</button>
-<br>
-<h3>Theory</h3>
-<table id="theoryTable">
-    <tr>
-        <th>Subject</th>
-        <th>Assignment 1</th>
-        <th>Assignment 2</th>
-        <th>Assignment 3</th>
-        <th>Assignment 4</th>
-        <th>Assignment 5</th>
-        <th>Certificate</th>
-        <th>IA 1</th>
-        <th>IA 2</th>
-        <th>IA 1 Failure</th>
-        <th>IA 2 Failure</th>
-        <th>End Semester</th>
-    </tr>
-    <tr style="background-color:lime; color: #fff;">
-        <td></td>
-        <td>Gn St C Sb</td>
-        <td>Gn St C Sb</td>
-        <td>Gn St C Sb</td>
-        <td>Gn St C Sb</td>
-        <td>Gn St C Sb</td>
-        <td>Gn St C Sb</td>
-        <td></td><td></td>
-        <td>Questions wrote</td>
-        <td>Questions wrote</td>
-        <td>St OG Fin</td>
-    </tr>
-    <tr data-subject="IP">
-        <th>Cloud Computing Technologies</th>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-    </tr>
-    <tr data-subject="CD"><th>Data Analytics</th>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-    </tr>    
-    <tr data-subject="AI"><th>MERN Stack Development (PE - II)</th>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-    </tr>    
-    <tr data-subject="CNS"><th>Renewable Energy Resources (OE - II)</th>
-            <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="mark" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="number" placeholder="ques wrote" min="0" max="100">
-        </td>
-        <td>
-            <input type="checkbox"><input type="checkbox"><input type="checkbox">
-        </td>
-    </tr>
-</table>
+    <div class="btn-container">
+        <button id="scrollDnBtn">Academics Dashboard</button>
+    </div>
 
-<h3>Lab</h3>
-<table id="labTable">
-    <tr>
-        <th>Subject</th>
-        <th>Experiment Started (Obs)</th>
-        <th>Experiment Completed (Obs)</th>
-        <th>Observation</th>
-        <th>Record</th>
-        <th>Observation Sign</th>
-        <th>Observation Seal</th>
-        <th>Record Sign</th>
-        <th>Record Seal</th>
-        <th>HOD Seal</th>
-        <th>End Sem</th>
-    </tr>
-    <tr data-subject="IPL">
-        <th>Cloud Computing Lab</th>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-    </tr>
-    <tr data-subject="CDL">
-        <th>Data Analytics Lab</th>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-    </tr>
-    <tr data-subject="Sec L">
-        <th>Professional Communication Lab</th>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-    </tr>
-    <tr data-subject="PCL">
-        <th>Project Lab</th>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-    </tr>
-    <tr data-subject="Comm L">
-        <th>Placement Lab</th>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="number" min="0" max="20"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-    </tr>
-</table>
-<br>
-<div id="otherWorks" style="text-align:center;">
-    <button id="scrollUpBtn">Other HW</button>
-</div>
-<br>
-<textarea class="scroll-textbox"></textarea>
-<br><br>
+    <h3>Theory</h3>
+    <table id="theoryTable">
+        <tr>
+            <th class="subj-col">Subject</th>
+            <th>Asgn 1</th><th>Asgn 2</th><th>Asgn 3</th><th>Asgn 4</th><th>Asgn 5</th>
+            <th>Cert.</th><th>IA 1</th><th>IA 2</th><th>F1</th><th>F2</th><th>End</th>
+        </tr>
+        <tr class="key-row">
+            <td>Legend: (Gn St C Sb)</td>
+            <td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td>
+            <td>Mark</td><td>Mark</td><td>Ques</td><td>Ques</td><td>St OG Fin</td>
+        </tr>
+        <tr data-subject="IP">
+            <th class="subj-col">Cloud Computing</th>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+        <tr data-subject="DA">
+            <th class="subj-col">Data Analytics</th>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+        <tr data-subject="MERN">
+            <th class="subj-col">MERN Stack (PE)</th>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+        <tr data-subject="RE">
+            <th class="subj-col">Renewable Energy</th>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="number" placeholder="0" min="0" max="100"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+    </table>
+
+    <h3>Lab</h3>
+    <table id="labTable">
+        <tr>
+            <th class="subj-col">Subject</th>
+            <th>Strt</th><th>Comp</th><th>Obs</th><th>Rec</th><th>O-Sgn</th><th>O-Sl</th><th>R-Sgn</th><th>R-Sl</th><th>HOD</th><th>End</th>
+        </tr>
+        <tr data-subject="CCL">
+            <th class="subj-col">Cloud Lab</th>
+            <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+        <tr data-subject="DAL">
+            <th class="subj-col">Analytics Lab</th>
+            <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+        <tr data-subject="PL">
+            <th class="subj-col">Placement Lab</th>
+            <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+        </tr>
+    </table>
+
+    <div class="btn-container">
+        <button id="scrollUpBtn">Other Homework / Notes</button>
+    </div>
+    <textarea class="scroll-textbox" placeholder="Enter notes here..."></textarea>
+
 <script>
 let db;
 const DB_NAME = "AcademicsDashboardDB";
@@ -308,10 +210,6 @@ request.onsuccess = function(event) {
     restoreAllFields();
 };
 
-request.onerror = function(event) {
-    console.error("IndexedDB error:", event.target.errorCode);
-};
-
 function saveField(id, value) {
     const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
@@ -324,8 +222,7 @@ function restoreAllFields() {
     const requestAll = store.getAll();
 
     requestAll.onsuccess = function() {
-        const savedData = requestAll.result;
-        savedData.forEach(item => {
+        requestAll.result.forEach(item => {
             const el = document.getElementById(item.id);
             if (el) {
                 if (el.type === "checkbox") el.checked = item.value;
@@ -338,7 +235,6 @@ function restoreAllFields() {
 let allInputs = document.querySelectorAll("input, textarea");
 allInputs.forEach((el, index) => {
     if (!el.id) el.id = "field_" + index;
-
     if (el.type === "checkbox") {
         el.addEventListener("change", () => saveField(el.id, el.checked));
     } else {
@@ -346,28 +242,18 @@ allInputs.forEach((el, index) => {
     }
 });
 
-document.getElementById("scrollDnBtn").addEventListener("click", function () {
-    document.getElementById("otherWorks").scrollIntoView();
-});
-
-document.getElementById("scrollUpBtn").addEventListener("click", function () {
-    document.getElementById("topo").scrollIntoView();
-});
-
 document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', () => {
-        let min = parseInt(input.min);
-        let max = parseInt(input.max);
+        let min = parseInt(input.min) || 0;
+        let max = parseInt(input.max) || 100;
         if (input.value !== "") {
             if (parseInt(input.value) < min) input.value = min;
             if (parseInt(input.value) > max) input.value = max;
         }
-
-        const th = input.closest('tr').querySelectorAll('th, td');
-        const colIndex = Array.from(input.closest('tr').children).indexOf(input.parentElement);
-
-        if (colIndex === 7 || colIndex === 8) {
+        const colIndex = Array.from(input.parentElement.parentElement.children).indexOf(input.parentElement);
+        if (colIndex >= 7 && colIndex <= 8) { // IA Marks
             input.style.color = (parseInt(input.value) < 60) ? 'red' : 'black';
+            input.style.fontWeight = (parseInt(input.value) < 60) ? 'bold' : 'normal';
         }
     });
 });
@@ -375,7 +261,6 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 document.querySelectorAll('tr[data-subject]').forEach(row => {
     const startedInput = row.querySelector('td:nth-child(2) input[type="number"]');
     const completedInput = row.querySelector('td:nth-child(3) input[type="number"]');
-
     if (startedInput && completedInput) {
         startedInput.addEventListener('input', () => {
             if (startedInput.value !== "") completedInput.value = Math.max(0, parseInt(startedInput.value)-1);
