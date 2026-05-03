@@ -26,8 +26,7 @@
         margin-bottom: 2px;
         flex-shrink: 0;
     }
-    #scrollDnBtn { 
-        flex: 3;
+    #scrollDnBtn, #scrollUpBtn { 
         height: 25px; 
         font-size: 13px; 
         background: lime; 
@@ -36,16 +35,8 @@
         font-weight: bold; 
         cursor: pointer;
     }
-    #scrollUpBtn { 
-        flex: 1;
-        height: 25px; 
-        font-size: 13px; 
-        background: lime; 
-        border: none; 
-        color: #000; 
-        font-weight: bold; 
-        cursor: pointer;
-    }
+    #scrollDnBtn { flex: 3; }
+    #scrollUpBtn { flex: 1; }
 
     /* Main Container */
     .main-content {
@@ -63,7 +54,6 @@
         min-height: 0;
     }
 
-    /* Wrap tables in flex-grow containers to eliminate blank space below */
     .table-container {
         flex: 1;
         display: flex;
@@ -93,11 +83,11 @@
         width: 100%; 
         border-collapse: collapse; 
         background: #fff; 
-        flex: 1; /* Makes table fill the container */
+        flex: 1; 
     }
     th, td { 
         border: 1px solid #1fed0c; 
-        padding: 0; /* Remove padding for total compactness */
+        padding: 0; 
         text-align: center; 
         font-size: 11px;
     }
@@ -112,6 +102,7 @@
         font-size: 11px; 
         text-align: center;
         outline: none;
+        display: block;
     }
     
     /* Checkbox Grouping - No Spacing */
@@ -324,6 +315,7 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
             if (val < min) input.value = min;
             if (val > max) input.value = max;
         }
+        // IA marks red-text logic
         const cell = input.parentElement;
         const row = cell.parentElement;
         const colIndex = Array.from(row.children).indexOf(cell);
@@ -331,20 +323,6 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
             input.style.color = (val < 60) ? 'red' : 'black';
         }
     });
-});
-
-document.querySelectorAll('tr[data-subject]').forEach(row => {
-    const inputs = row.querySelectorAll('input[type="number"]');
-    if (inputs.length >= 2) {
-        const startedInput = inputs[0];
-        const completedInput = inputs[1];
-        startedInput.addEventListener('input', () => {
-            if (startedInput.value !== "") completedInput.value = Math.max(0, parseInt(startedInput.value)-1);
-        });
-        completedInput.addEventListener('input', () => {
-            if (completedInput.value !== "") startedInput.value = parseInt(completedInput.value)+1;
-        });
-    }
 });
 </script>
 </body>
