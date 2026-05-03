@@ -6,189 +6,216 @@
 <title>Academics Dashboard</title>
 <link rel="shortcut icon" href="D:\eaknnewproject\eakn.png" type="image/x-icon">
 <style>
-    /* Global Reset & Compact Layout */
+    /* Reset and Layout */
     * { box-sizing: border-box; }
     body { 
         overflow: hidden; 
-        font-family: 'Segoe UI', 'Lucida Sans', sans-serif; 
+        font-family: 'Lucida Sans', sans-serif; 
         margin: 0; 
         background: #f4ffee; 
-        height: 100vh; 
-        display: flex; 
-        flex-direction: column; 
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
         padding: 5px;
     }
 
-    /* Condensed Typography */
+    /* Top Navigation Bar */
+    .header-bar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+    #scrollDnBtn, #scrollUpBtn { 
+        flex: 1;
+        height: 30px; 
+        font-size: 14px; 
+        background: lime; 
+        border: none; 
+        color: #000; 
+        font-weight: bold; 
+        border-radius: 4px; 
+        cursor: pointer;
+    }
+
+    /* Main Container (Tables Left, Notes Right) */
+    .main-content {
+        display: flex;
+        gap: 8px;
+        flex: 1;
+        min-height: 0; /* Important for flex child overflow */
+    }
+
+    .tables-section {
+        flex: 3; /* Takes 75% of width */
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .notes-section {
+        flex: 1; /* Takes 25% of width */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Table Styling */
     h3 { 
-        margin: 2px 0; 
-        font-size: 13px; 
+        margin: 0; 
+        font-size: 14px; 
         background-color: #00ec00; 
         padding: 4px; 
         color: #fff; 
         text-align: center;
-        border-radius: 4px 4px 0 0;
     }
-
-    /* Tables - Optimized for space */
-    table { width: 100%; border-collapse: collapse; background: #fff; table-layout: auto; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
     th, td { 
         border: 1px solid #1fed0c; 
-        padding: 2px 1px; 
+        padding: 2px; 
         text-align: center; 
-        font-size: 11px; 
-        line-height: 1;
+        font-size: 12px;
     }
-    th { background-color: lime; color: white; font-weight: 600; }
+    th { background-color: lime; color: white; }
     
-    /* Small UI Elements */
-    input[type="number"] { width: 35px; font-size: 10px; padding: 1px; border: 1px solid #ccc; }
-    input[type="checkbox"] { transform: scale(0.9); margin: 1px; vertical-align: middle; }
+    /* Input Compactness */
+    input[type="number"] { width: 40px; padding: 1px; font-size: 11px; border: 1px solid #ccc; }
+    input[type="checkbox"] { 
+        margin: 0 1px; 
+        transform: scale(0.9); 
+        cursor: pointer;
+    }
     tr:nth-child(even) { background-color: #f9f9f9; }
 
-    /* Button Styling */
-    .btn-container { text-align: center; padding: 2px; }
-    #scrollDnBtn, #scrollUpBtn { 
-        width: 200px; 
-        height: 24px; 
-        font-size: 14px; 
-        background: lime; 
-        border: none; 
-        color: #fff; 
-        font-weight: bold; 
-        border-radius: 20px; 
-        cursor: pointer; 
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    /* Dynamic Textarea */
+    /* Right Column Textarea */
     .scroll-textbox { 
-        flex-grow: 1; 
+        flex: 1; 
         width: 100%; 
         border: 1px solid #1fed0c; 
-        padding: 5px; 
+        padding: 8px; 
         resize: none; 
         font-size: 14px; 
         font-family: Arial, sans-serif;
-        margin-top: 5px;
         background: #fff;
     }
 
-    /* Specific Row for Keys (Gn St C Sb) */
-    .key-row td { font-size: 9px; padding: 1px; background-color: #e8ffe8; color: #222; font-weight: bold;}
-    
-    /* Subject column width */
-    .subj-col { width: 15%; text-align: left; padding-left: 5px; }
+    .key-row { background-color: lime !important; color: #fff; font-size: 10px; }
+    .key-row td { padding: 1px; }
 </style>
 </head>
 <body>
-    <div class="btn-container">
+
+    <div class="header-bar">
         <button id="scrollDnBtn">Academics Dashboard</button>
-    </div>
-
-    <h3>Theory</h3>
-    <table id="theoryTable">
-        <tr>
-            <th class="subj-col">Subject</th>
-            <th>Asgn 1</th><th>Asgn 2</th><th>Asgn 3</th><th>Asgn 4</th><th>Asgn 5</th>
-            <th>Cert.</th><th>IA 1</th><th>IA 2</th><th>F1</th><th>F2</th><th>End</th>
-        </tr>
-        <tr class="key-row">
-            <td>Legend: (Gn St C Sb)</td>
-            <td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td>
-            <td>Mark</td><td>Mark</td><td>Ques</td><td>Ques</td><td>St OG Fin</td>
-        </tr>
-        <tr data-subject="IP">
-            <th class="subj-col">Cloud Computing</th>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-        <tr data-subject="DA">
-            <th class="subj-col">Data Analytics</th>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-        <tr data-subject="MERN">
-            <th class="subj-col">MERN Stack (PE)</th>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-        <tr data-subject="RE">
-            <th class="subj-col">Renewable Energy</th>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="number" placeholder="0" min="0" max="100"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-    </table>
-
-    <h3>Lab</h3>
-    <table id="labTable">
-        <tr>
-            <th class="subj-col">Subject</th>
-            <th>Strt</th><th>Comp</th><th>Obs</th><th>Rec</th><th>O-Sgn</th><th>O-Sl</th><th>R-Sgn</th><th>R-Sl</th><th>HOD</th><th>End</th>
-        </tr>
-        <tr data-subject="CCL">
-            <th class="subj-col">Cloud Lab</th>
-            <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
-            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
-            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-        <tr data-subject="DAL">
-            <th class="subj-col">Analytics Lab</th>
-            <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
-            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
-            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-        <tr data-subject="PL">
-            <th class="subj-col">Placement Lab</th>
-            <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
-            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
-            <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
-            <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
-        </tr>
-    </table>
-
-    <div class="btn-container">
         <button id="scrollUpBtn">Other Homework / Notes</button>
     </div>
-    <textarea class="scroll-textbox" placeholder="Enter notes here..."></textarea>
+
+    <div class="main-content">
+        <!-- Tables on the Left -->
+        <div class="tables-section">
+            <h3>Theory</h3>
+            <table id="theoryTable">
+                <tr>
+                    <th style="width: 20%;">Subject</th>
+                    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>Cert</th>
+                    <th>IA1</th><th>IA2</th><th>F1</th><th>F2</th><th>End</th>
+                </tr>
+                <tr class="key-row">
+                    <td></td>
+                    <td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td><td>G S C B</td>
+                    <td>Mark</td><td>Mark</td><td>Ques</td><td>Ques</td><td>S O F</td>
+                </tr>
+                <tr data-subject="IP">
+                    <th>Cloud Computing</th>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="number" placeholder="mark"></td><td><input type="number" placeholder="mark"></td>
+                    <td><input type="number" placeholder="qty"></td><td><input type="number" placeholder="qty"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+                <tr data-subject="CD">
+                    <th>Data Analytics</th>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="number" placeholder="mark"></td><td><input type="number" placeholder="mark"></td>
+                    <td><input type="number" placeholder="qty"></td><td><input type="number" placeholder="qty"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+                <tr data-subject="AI">
+                    <th>MERN Stack</th>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="number" placeholder="mark"></td><td><input type="number" placeholder="mark"></td>
+                    <td><input type="number" placeholder="qty"></td><td><input type="number" placeholder="qty"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+                <tr data-subject="CNS">
+                    <th>Renewable Energy</th>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                    <td><input type="number" placeholder="mark"></td><td><input type="number" placeholder="mark"></td>
+                    <td><input type="number" placeholder="qty"></td><td><input type="number" placeholder="qty"></td>
+                    <td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+            </table>
+
+            <h3>Lab</h3>
+            <table id="labTable">
+                <tr>
+                    <th style="width: 20%;">Subject</th>
+                    <th>Strt</th><th>Comp</th><th>Obs</th><th>Rec</th><th>O-S</th><th>O-L</th><th>R-S</th><th>R-L</th><th>HOD</th><th>End</th>
+                </tr>
+                <tr data-subject="IPL">
+                    <th>Cloud Lab</th>
+                    <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+                <tr data-subject="CDL">
+                    <th>Data Analytics Lab</th>
+                    <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+                <tr data-subject="SecL">
+                    <th>Professional Comm</th>
+                    <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+                <tr data-subject="PCL">
+                    <th>Project Lab</th>
+                    <td><input type="number" min="0" max="20"></td><td><input type="number" min="0" max="20"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td><td><input type="checkbox"><input type="checkbox"><input type="checkbox"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Notes on the Right -->
+        <div class="notes-section">
+            <h3>Notes / Homework</h3>
+            <textarea id="notesArea" class="scroll-textbox" placeholder="Type here..."></textarea>
+        </div>
+    </div>
 
 <script>
 let db;
@@ -220,7 +247,6 @@ function restoreAllFields() {
     const transaction = db.transaction([STORE_NAME], "readonly");
     const store = transaction.objectStore(STORE_NAME);
     const requestAll = store.getAll();
-
     requestAll.onsuccess = function() {
         requestAll.result.forEach(item => {
             const el = document.getElementById(item.id);
@@ -244,16 +270,16 @@ allInputs.forEach((el, index) => {
 
 document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', () => {
+        let val = parseInt(input.value);
         let min = parseInt(input.min) || 0;
         let max = parseInt(input.max) || 100;
-        if (input.value !== "") {
-            if (parseInt(input.value) < min) input.value = min;
-            if (parseInt(input.value) > max) input.value = max;
+        if (!isNaN(val)) {
+            if (val < min) input.value = min;
+            if (val > max) input.value = max;
         }
         const colIndex = Array.from(input.parentElement.parentElement.children).indexOf(input.parentElement);
-        if (colIndex >= 7 && colIndex <= 8) { // IA Marks
-            input.style.color = (parseInt(input.value) < 60) ? 'red' : 'black';
-            input.style.fontWeight = (parseInt(input.value) < 60) ? 'bold' : 'normal';
+        if (colIndex === 7 || colIndex === 8) {
+            input.style.color = (val < 60) ? 'red' : 'black';
         }
     });
 });
