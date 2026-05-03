@@ -25,7 +25,19 @@
         gap: 10px;
         margin-bottom: 5px;
     }
-    #scrollDnBtn, #scrollUpBtn { 
+    #scrollDnBtn { 
+        flex: 3;
+        height: 30px; 
+        font-size: 14px; 
+        background: lime; 
+        border: none; 
+        color: #000; 
+        font-weight: bold; 
+        border-radius: 4px; 
+        cursor: pointer;
+    }
+
+    #scrollUpBtn { 
         flex: 1;
         height: 30px; 
         font-size: 14px; 
@@ -40,7 +52,7 @@
     /* Main Container (Tables Left, Notes Right) */
     .main-content {
         display: flex;
-        gap: 8px;
+        gap: 0px;
         flex: 1;
         min-height: 0; /* Important for flex child overflow */
     }
@@ -49,7 +61,7 @@
         flex: 3; /* Takes 75% of width */
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 0px;
     }
 
     .notes-section {
