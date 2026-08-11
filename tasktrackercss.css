@@ -1,4 +1,4 @@
-body { background: url('https://github.com/Harish040805/desktopfiles/blob/main/giphy.gif?raw=true'); background-repeat: no-repeat; background-attachment: scroll; background-size: cover; font-family: sans-serif; color: white; margin: 0; padding: 0; }
+body { background: url('https://raw.githubusercontent.com/Harish040805/desktopfiles/main/giphy.gif'); background-repeat: no-repeat; background-attachment: scroll; background-size: cover; font-family: sans-serif; color: white; margin: 0; padding: 0; }
 .task-tracker { background-color: #ffffff00; padding: 20px; width: 100%; height: auto; position: fixed; top: 0; left: 0; z-index: 1000; }
 .task-tracker h1 { color: #ffffff; text-align: center; }
 .controls { display: flex; flex-direction: column; width: 17%; height: 100vh; background-color: #ffffff00; float: left; padding: 15px; }
